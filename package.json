@@ -1,0 +1,16 @@
+{
+  "name": "authocate",
+  "version": "1.0.0",
+  "description": "npm package to handle authentication logic",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Authocate",
+    "Authenticate",
+    "Authenticator"
+  ],
+  "author": "Siddharth Saurav",
+  "license": "ISC"
+}
