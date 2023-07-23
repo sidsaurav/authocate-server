@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs')
-const User = require('../models/userSchema')
+const User = require('./userSchema')
 
 const loginUser = async (req, res) => {
   try {
@@ -7,23 +7,24 @@ const loginUser = async (req, res) => {
     const password = req.body.password
 
     if (!username || !password) {
-      res.status(400).send('Please provide username and password')
+      return res
+        .status(400)
+        .json({ message: 'Please provide username and password' })
     }
-
-    const foundUser = User.find({ username: username })
+    const foundUser = await User.findOne({ username: username })
 
     if (!foundUser) {
-      res.status(401).send('Invalid credentials')
+      return res.status(401).json({ message: 'Invalid credentials' })
     }
-
+    console.log(foundUser)
     const isMatch = await bcrypt.compare(password, foundUser.password)
 
     if (!isMatch) {
-      res.status(401).send('Invalid credentials')
+      return res.status(401).json({ message: 'Invalid credentials' })
     }
-    res.send('login user')
+    return res.status(200).json('login user')
   } catch (err) {
-    res.send(500, err.message)
+    return res.status(500).json({ message: err.message })
   }
 }
 
@@ -36,31 +37,37 @@ const signupUser = async (req, res) => {
     const password = req.body.password
 
     if (!username || !password) {
-      res.status(400).send('Please provide username and password')
+      return res.status(400).send('Please provide username and password')
     }
 
-    const foundUser = await User.find({ username: username })
-
+    const foundUser = await User.findOne({ username: username })
+    console.log(foundUser)
     if (foundUser) {
-      res.status(401).send('User already exists')
+      return res.status(401).send('User already exists')
     }
 
     const hash = await bcrypt.hash(password, 10)
 
-    const createdUser = await User.create(
-      { username: username, password: hash },
-      { timestamps: true }
-    )
+    const createdUser = await User.create({
+      username: username,
+      password: hash,
+    })
 
     if (createdUser) {
-      res.send(201, 'User created')
+      return res.status(201).json({ message: 'User created' })
     }
   } catch (err) {
-    res.send(401, err.message)
+    return res.status(401).json({ message: err.message })
   }
 }
+
 const getUser = (req, res) => {
-  res.send('get user')
+  return res.status(200).json({ message: 'get user' })
+}
+
+const getAllUsers = async (req, res) => {
+  const users = await User.find()
+  return res.status(200).json(users)
 }
 
 module.exports = {
@@ -68,4 +75,5 @@ module.exports = {
   logoutUser,
   signupUser,
   getUser,
+  getAllUsers,
 }
