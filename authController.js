@@ -1,5 +1,7 @@
 const bcrypt = require('bcryptjs')
 const User = require('./userSchema')
+const jwt = require('jsonwebtoken')
+const { JWT_SECRET_KEY } = require('./hidden.js')
 
 const loginUser = async (req, res) => {
   try {
@@ -22,15 +24,17 @@ const loginUser = async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({ message: 'Invalid credentials' })
     }
-    return res.status(200).json('login user')
+
+    const token = jwt.sign({ username: foundUser.username }, JWT_SECRET_KEY, {
+      expiresIn: '1d',
+    })
+
+    return res.status(200).json({ username: foundUser.username, token: token })
   } catch (err) {
     return res.status(500).json({ message: err.message })
   }
 }
 
-const logoutUser = (req, res) => {
-  res.send('logout user')
-}
 const signupUser = async (req, res) => {
   try {
     const username = req.body.username
@@ -59,6 +63,10 @@ const signupUser = async (req, res) => {
   } catch (err) {
     return res.status(401).json({ message: err.message })
   }
+}
+
+const logoutUser = (req, res) => {
+  res.send('logout user')
 }
 
 const getUser = (req, res) => {

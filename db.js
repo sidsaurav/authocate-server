@@ -1,5 +1,4 @@
-const MONGO_URI =
-  'mongodb+srv://sidsaurav11:Test1234@cluster0.j1wrspi.mongodb.net/'
+const { MONGO_URI } = require('./hidden.js')
 
 const mongoose = require('mongoose')
 
