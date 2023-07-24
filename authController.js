@@ -58,7 +58,12 @@ const signupUser = async (req, res) => {
     })
 
     if (createdUser) {
-      return res.status(201).json({ message: 'User created' })
+      const token = jwt.sign({ username }, JWT_SECRET_KEY, {
+        expiresIn: '1d',
+      })
+      return res
+        .status(201)
+        .json({ message: 'User created', username, token: token })
     }
   } catch (err) {
     return res.status(401).json({ message: err.message })
