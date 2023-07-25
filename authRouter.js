@@ -8,7 +8,6 @@ const {
 const express = require('express')
 const router = express.Router()
 
-router.route('/login').get(getUser).post(loginUser)
-router.route('/signup').post(signupUser)
-router.route('/test').get(getAllUsers)
+router.route('/api/auth/login').get(getUser).post(loginUser)
+router.route('/api/auth/signup').post(signupUser)
 module.exports = router

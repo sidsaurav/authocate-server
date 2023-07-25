@@ -1,13 +1,3 @@
-// username -> unique
-// password ->
-// email -> unique
-// dateOfBirth
-// firstName
-// lastName
-
-// 1. username | email - always
-// 2. password - always
-
 const validator = require('validator')
 
 function isStrongPassword(password) {
@@ -30,32 +20,41 @@ function isStrongPassword(password) {
   )
 }
 
-const userSchema = new mongoose.Schema(
-  {
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    password: {
-      type: String,
-      required: true,
-      validate: {
-        validator: function (value) {
-          return schema.validate(value)
-        },
-      },
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-      validate: {
-        validator: function (value) {
-          return validator.isEmail(value)
-        },
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+schemaObj = {
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+    validate: {
+      validator: function (value) {
+        return isStrongPassword(value)
       },
     },
   },
-  { timestamps: true }
-)
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    validate: {
+      validator: function (value) {
+        return EMAIL_REGEX.test(value)
+      },
+    },
+  },
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
+  },
+}
+
+//   { timestamps: true }
