@@ -58,3 +58,5 @@ schemaObj = {
 }
 
 //   { timestamps: true }
+
+// email and pass are must

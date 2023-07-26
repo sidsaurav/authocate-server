@@ -1,9 +1,27 @@
 const bcrypt = require('bcryptjs')
-const User = require('./userSchema')
 const jwt = require('jsonwebtoken')
-const { JWT_SECRET_KEY } = require('./hidden.js')
 
-const loginUser = async (req, res) => {
+//============================================================================
+const mongoose = require('mongoose')
+
+const userSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true }
+)
+
+//============================================================================
+
+const loginUser = (JWT_SECRET_KEY) => async (req, res) => {
   try {
     const username = req.body.username
     const password = req.body.password
@@ -13,12 +31,14 @@ const loginUser = async (req, res) => {
         .status(400)
         .json({ message: 'Please provide username and password' })
     }
-    const foundUser = await User.findOne({ username: username })
+    const foundUser = await req.conn
+      .model('User', userSchema)
+      .findOne({ username: username })
 
     if (!foundUser) {
       return res.status(401).json({ message: 'Invalid credentials' })
     }
-    console.log(foundUser)
+
     const isMatch = await bcrypt.compare(password, foundUser.password)
 
     if (!isMatch) {
@@ -35,7 +55,7 @@ const loginUser = async (req, res) => {
   }
 }
 
-const signupUser = async (req, res) => {
+const signupUser = (JWT_SECRET_KEY) => async (req, res) => {
   try {
     const username = req.body.username
     const password = req.body.password
@@ -44,7 +64,9 @@ const signupUser = async (req, res) => {
       return res.status(400).send('Please provide username and password')
     }
 
-    const foundUser = await User.findOne({ username: username })
+    const foundUser = await req.conn
+      .model('User', userSchema)
+      .findOne({ username: username })
     console.log(foundUser)
     if (foundUser) {
       return res.status(401).send('User already exists')
@@ -52,7 +74,7 @@ const signupUser = async (req, res) => {
 
     const hash = await bcrypt.hash(password, 10)
 
-    const createdUser = await User.create({
+    const createdUser = await req.conn.model('User', userSchema).create({
       username: username,
       password: hash,
     })
@@ -70,16 +92,16 @@ const signupUser = async (req, res) => {
   }
 }
 
-const logoutUser = (req, res) => {
+const logoutUser = async (req, res) => {
   res.send('logout user')
 }
 
-const getUser = (req, res) => {
+const getUser = async (req, res) => {
   return res.status(200).json({ message: 'get user' })
 }
 
 const getAllUsers = async (req, res) => {
-  const users = await User.find()
+  const users = await req.User.find()
   return res.status(200).json(users)
 }
 
