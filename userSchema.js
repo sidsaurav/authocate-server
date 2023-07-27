@@ -12,6 +12,21 @@ const generateModel = (conn) => {
         type: String,
         required: true,
       },
+      email: {
+        type: String,
+      },
+      profilePic: {
+        type: String,
+      },
+      //   phoneNum: {
+      //     type: String,
+      //   },
+      //   role: {
+      //     type: String,
+      //   },
+      //   lastLoginDate: {
+      //     type: Date,
+      //   },
     },
     { timestamps: true }
   )
