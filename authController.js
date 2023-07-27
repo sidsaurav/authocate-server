@@ -31,9 +31,7 @@ const loginUser = (JWT_SECRET_KEY) => async (req, res) => {
         .status(400)
         .json({ message: 'Please provide username and password' })
     }
-    const foundUser = await req.conn
-      .model('User', userSchema)
-      .findOne({ username: username })
+    const foundUser = await req.User.findOne({ username: username })
 
     if (!foundUser) {
       return res.status(401).json({ message: 'Invalid credentials' })
@@ -64,9 +62,7 @@ const signupUser = (JWT_SECRET_KEY) => async (req, res) => {
       return res.status(400).send('Please provide username and password')
     }
 
-    const foundUser = await req.conn
-      .model('User', userSchema)
-      .findOne({ username: username })
+    const foundUser = await req.User.findOne({ username: username })
     console.log(foundUser)
     if (foundUser) {
       return res.status(401).send('User already exists')
@@ -74,7 +70,7 @@ const signupUser = (JWT_SECRET_KEY) => async (req, res) => {
 
     const hash = await bcrypt.hash(password, 10)
 
-    const createdUser = await req.conn.model('User', userSchema).create({
+    const createdUser = await req.User.create({
       username: username,
       password: hash,
     })
