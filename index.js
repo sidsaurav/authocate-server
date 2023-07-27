@@ -1,34 +1,24 @@
 const express = require('express')
 const morgan = require('morgan')
 const authRouter = require('./authRouter.js')
-const mongoose = require('mongoose')
+const generateModel = require('./userSchema.js')
 
 const initApp = (conn, JWT_SECRET_KEY) => {
-  console.log('this runs only once because it is not in a middleware')
+  console.log('Initializing authentication...')
   const app = express()
 
-  const userSchema = new mongoose.Schema(
-    {
-      username: {
-        type: String,
-        required: true,
-        unique: true,
-      },
-      password: {
-        type: String,
-        required: true,
-      },
-    },
-    { timestamps: true }
-  )
-  const User = conn.model('User', userSchema)
+  const User = generateModel(conn)
 
   app.listen(5000, () => console.log('Server running on port 5000'))
+  app.use((req, res, next) => {
+    req.User = User
+    next()
+  })
   app.use(morgan('tiny'))
   app.use(express.json())
 
   app.get('/', (req, res) => {
-    res.send('Hello World!')
+    res.json({ message: 'Hello World!' })
   })
   app.use(authRouter(JWT_SECRET_KEY))
 
