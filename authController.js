@@ -33,6 +33,8 @@ const loginUser = (JWT_SECRET_KEY) => async (req, res) => {
   }
 }
 
+const getLoggedInUser = async (req, res) => {}
+
 const signupUser = (JWT_SECRET_KEY) => async (req, res) => {
   try {
     const username = req.body.username
@@ -74,7 +76,7 @@ const signupUser = (JWT_SECRET_KEY) => async (req, res) => {
 }
 
 const logoutUser = async (req, res) => {
-  res.send('logout user')
+  res.json({ message: 'Stateless API. Handle in Client side' })
 }
 
 const getUser = async (req, res) => {
