@@ -27,13 +27,25 @@ const loginUser = (JWT_SECRET_KEY) => async (req, res) => {
       expiresIn: '1d',
     })
     foundUser.password = undefined
-    return res.status(200).json({ foundUser, token: token })
+    foundUser.token = token
+    return res.status(200).json({ ...foundUser._doc, token })
   } catch (err) {
     return res.status(500).json({ message: err.message })
   }
 }
 
-const getLoggedInUser = async (req, res) => {}
+const getLoggedInUser = async (req, res) => {
+  try {
+    const loggedInUser = await req.User.findOne({
+      username: req.userData.username,
+    })
+    loggedInUser.password = undefined
+
+    return res.status(200).json(loggedInUser)
+  } catch (err) {
+    return res.status(500).json({ message: err.message })
+  }
+}
 
 const signupUser = (JWT_SECRET_KEY) => async (req, res) => {
   try {
@@ -68,7 +80,7 @@ const signupUser = (JWT_SECRET_KEY) => async (req, res) => {
       createdUser.password = undefined
       return res
         .status(201)
-        .json({ message: 'User created', token, user: createdUser })
+        .json({ message: 'User created', user: { ...createdUser._doc, token } })
     }
   } catch (err) {
     return res.status(401).json({ message: err.message })
@@ -79,8 +91,14 @@ const logoutUser = async (req, res) => {
   res.json({ message: 'Stateless API. Handle in Client side' })
 }
 
-const getUser = async (req, res) => {
-  return res.status(200).json({ message: 'get user' })
+const getUserById = async (req, res) => {
+  const ID = req.params.id
+  const foundUser = await req.User.findById(ID)
+  if (!foundUser) {
+    return res.status(404).json({ message: 'User not found' })
+  }
+  foundUser.password = undefined
+  return res.status(200).json(foundUser)
 }
 
 const getAllUsers = async (req, res) => {
@@ -92,6 +110,7 @@ module.exports = {
   loginUser,
   logoutUser,
   signupUser,
-  getUser,
+  getLoggedInUser,
   getAllUsers,
+  getUserById,
 }
