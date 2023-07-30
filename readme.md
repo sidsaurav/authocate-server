@@ -11,13 +11,16 @@
 ### Follow these steps to get started -
 1. Setup express and create an app instance -
  
-
-> `const  express  =  require('express')` 
-> `const  app  =  express()`
+```js
+const  express  =  require('express') 
+const  app  =  express()`
+```
 
 2. Setup dotenv and write your JWT secret key in the env file as shown below -
->`const  dotenv  =  require('dotenv')`
->`dotenv.config()`
+```js
+const  dotenv  =  require('dotenv')
+dotenv.config()
+```
 in the env file : **JWT_SECRET_KEY  =  'yourlittlesecret'**
 3. Add `app.use(express.json())` middleware to handle json data.
 
