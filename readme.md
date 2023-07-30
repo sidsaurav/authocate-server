@@ -1,3 +1,4 @@
+
 ﻿# AUTHOCATE-SERVER
 
 
@@ -37,9 +38,12 @@ in the env file : **JWT_SECRET_KEY  =  'yourlittlesecret'**
 	- Now export the function and import it in index.js. 
 	- After this you can use .then() to invoke the authocate-server instance.
 
-*Still having confusions??* :no_mouth::no_mouth: 
-*It's okay darling, I got you covered just use following code*  :smile:
-*and don't forget to star my github repo and follow me on github* :smirk:
+>*Still having confusions??* :no_mouth::no_mouth: 
+
+>*It's okay darling, I got you covered just use following code*  :smile:
+
+>*and don't forget to star my github repo and follow me on github* :smirk:
+
 ### connectDB.js
 ```js
 const mongoose = require('mongoose')
@@ -85,7 +89,7 @@ connectDB().then((conn) => authocate(app, conn, process.env.JWT_SECRET_KEY))
 ### 1. Login User
 
 - ENDPOINT : `/api/auth/login`
-- Method: <font color="brown">**POST**</font>
+- Method: **`POST`**
 - Description: Endpoint to authenticate a user and obtain an access token.
 - **Request Body**:
   ```json
@@ -113,7 +117,7 @@ connectDB().then((conn) => authocate(app, conn, process.env.JWT_SECRET_KEY))
 ### 2. Get Logged in User
 
 - ENDPOINT : `/api/auth/login`
-- Method: <font color="green">**GET**</font>
+- Method: **`GET`**
 - Headers: Authorisation = Bearer Token
 - Description: Get details of logged in user.
  - Response Body:
@@ -132,7 +136,7 @@ connectDB().then((conn) => authocate(app, conn, process.env.JWT_SECRET_KEY))
 ### 3. Signup User
 
 - ENDPOINT : `/api/auth/signup`
-- Method: <font color="brown">**POST**</font>
+- Method: **`POST`**
 - Description: Endpoint to register a user.
 - **Request Body**:
   ```json
@@ -162,7 +166,7 @@ connectDB().then((conn) => authocate(app, conn, process.env.JWT_SECRET_KEY))
 ### 4. Update User
 
 - ENDPOINT : `/api/auth/update`
-- Method: <font color="purple">**PATCH**</font>
+- Method: *`PATCH`**
 - Description: Endpoint to update logged in user.
 - **Request Body**:
   ```json
@@ -192,7 +196,7 @@ connectDB().then((conn) => authocate(app, conn, process.env.JWT_SECRET_KEY))
 ### 5. Get User by ID
 
 - ENDPOINT : `/api/user/:id`
-- Method: <font color="green">**GET**</font>
+- Method: **`GET`**
 - Description: Endpoint to get a user by its ID.
 - Params : ID of User
  - **Response Body**:
