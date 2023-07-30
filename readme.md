@@ -1,6 +1,30 @@
+
 # AUTHOCATE-SERVER
 
+Authocate-SERVER is a powerful Node.js middleware that simplifies authentication and user management for your Express applications. 
 
+You can add authentication to your web app using just one line of code. It supports authentication using username and password, and JWT tokens. 
+
+It also provides endpoints for user management like updating user, getting user by ID, etc.
+
+### This is just an initial version and I am planning to add more features in future and make it more robust and secure.
+
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Setup Instructions](#setup-instructions)
+- [API DOCUMENTATION](#api-documentation)
+    - [1. Login User](#1-login-user)
+    - [2. Get Logged in User](#2-get-logged-in-user)
+    - [3. Signup User](#3-signup-user)
+    - [4. Update User](#4-update-user)
+    - [5. Get User by ID](#5-get-user-by-id)
+- [License](#license)
+
+## Installation
+
+Just do `npm install authocate/server` and you are good to go. :v:
 
 ## Setup Instructions 
 
