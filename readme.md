@@ -1,15 +1,15 @@
 
-# AUTHOCATE-SERVER
+# authocate-server
 
-Authocate-SERVER is a powerful Node.js middleware that simplifies authentication and user management for your Express applications. 
+authocate-server is a powerful Node.js middleware that simplifies authentication and user management for your Express applications. 
 
 You can add authentication to your web app using **just one line of code**. It supports authentication using username and password, and JWT tokens. 
 
 It also provides endpoints for user management like updating user, getting user by ID, etc.
 
-> ### This is just an initial version and I am planning to add more features in future and make it more robust and secure.
-> ### I am also planning to make a client side authocate to easily connect with this package and make it cheesewalk to handle authentications.
-
+> This is just an initial version and I am planning to add more features in future and make it more robust and secure.
+> I am also planning to make a client side authocate to easily connect with this package and make it cheesewalk to handle authentications.
+> Your feedbacks would be highly appreciated. :smile:. Do contact me on siddharthsaurav15@gmail.com for any queries or suggestions.
 
 ## Table of Contents
 
