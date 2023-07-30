@@ -14,9 +14,12 @@ const generateModel = (conn) => {
       },
       email: {
         type: String,
+        required: true,
       },
       profilePic: {
         type: String,
+        default:
+          'https://www.nicepng.com/png/detail/933-9332131_profile-picture-default-png.png',
       },
       //   phoneNum: {
       //     type: String,
