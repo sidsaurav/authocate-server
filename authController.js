@@ -53,7 +53,6 @@ const signupUser = (JWT_SECRET_KEY) => async (req, res) => {
     const password = req.body.password
     const email = req.body.email
 
-    console.log(username, password, email)
     if (!username || !password) {
       return res.status(400).send('Please provide username and password')
     }
@@ -87,6 +86,28 @@ const signupUser = (JWT_SECRET_KEY) => async (req, res) => {
   }
 }
 
+const updateUser = async (req, res) => {
+  const loggedInUser = req.userData.username
+  let foundUser = await req.User.findOne({ username: loggedInUser })
+  if (!foundUser) {
+    return res.status(404).json({
+      message:
+        'API error, this should not happen. Please contact the owner to get it resolved',
+    })
+  }
+  const updatedUser = await req.User.updateOne(
+    { username: loggedInUser },
+    { $set: { ...req.body } }
+  )
+
+  foundUser = await req.User.findOne({ username: loggedInUser })
+  foundUser.password = undefined
+  return res.status(200).json({
+    message: 'User updated successfully!',
+    updatedUser: foundUser,
+  })
+}
+
 const logoutUser = async (req, res) => {
   res.json({ message: 'Stateless API. Handle in Client side' })
 }
@@ -113,4 +134,5 @@ module.exports = {
   getLoggedInUser,
   getAllUsers,
   getUserById,
+  updateUser,
 }
