@@ -13,8 +13,14 @@
   ],
   "author": "Siddharth Saurav",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sidsaurav/authocate-server"
+  },
+  "homepage": "https://github.com/sidsaurav/authocate-server",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "jsonwebtoken": "^9.0.1"
   }
+  
 }
