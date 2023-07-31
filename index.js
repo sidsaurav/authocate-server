@@ -15,9 +15,5 @@ const initApp = (app, conn, JWT_SECRET_KEY) => {
     res.json({ message: 'Hello World!' })
   })
   app.use(authRouter(JWT_SECRET_KEY))
-
-  app.get('*', (req, res) => {
-    res.status(404).send('404 Error : Page not found :(')
-  })
 }
-module.exports = initApp
+module.exports = { authocate: initApp, authorize }
