@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 
-const authorise = (JWT_SECRET_KEY) => (req, res, next) => {
+const authorize = (JWT_SECRET_KEY) => (req, res, next) => {
   if (req.method === 'OPTIONS') {
     return next()
   }
@@ -17,4 +17,4 @@ const authorise = (JWT_SECRET_KEY) => (req, res, next) => {
   }
 }
 
-module.exports = authorise
+module.exports = authorize
