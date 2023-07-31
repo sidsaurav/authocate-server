@@ -1,113 +1,116 @@
 
+
 # authocate-server
+Email ID:  siddharthsaurav15@gmail.com
+Linkedin : https://www.linkedin.com/in/siddharth-saurav/
 
-authocate-server is a powerful Node.js middleware that simplifies authentication and user management for your Express applications. 
-
-You can add authentication to your web app using **just one line of code**. It supports authentication using username and password, and JWT tokens. 
-
-It also provides endpoints for user management like updating user, getting user by ID, etc.
-
-> This is just an initial version and I am planning to add more features in future and make it more robust and secure.
-
-> I am also planning to make a client side authocate to easily connect with this package and make it cheesewalk to handle authentications.
-
-> Please raise  :smile:. Do contact me on siddharthsaurav15@gmail.com for any queries or suggestions.
+## Introduction
+**authocate-server is a powerful Node.js middleware that simplifies authentication and user management for your Express applications. You can add authentication to your web app using **just one line of code**. 
+With authocate-server, you can create custom secure endpoints with ease and focus on building the core features of your application.
 
 ## Table of Contents
 
-- [Installation](#installation)
+- [Features](#features)
 - [Setup Instructions](#setup-instructions)
+- [Usage](#usage)
 - [API DOCUMENTATION](#api-documentation)
     - [1. Login User](#1-login-user)
     - [2. Get Logged in User](#2-get-logged-in-user)
     - [3. Signup User](#3-signup-user)
     - [4. Update User](#4-update-user)
     - [5. Get User by ID](#5-get-user-by-id)
-- [License](#license)
+- [Future Development](#future-development)
+- [Contribute](#contribute)
 
-## Installation
+## Features
+- User Authentication: Effortlessly handle user registration and login with secure password hashing using **bcrypt** and **JWT**-based authentication.
 
-Just do `npm install authocate/server` and you are good to go. :v:
+- Access Control: You will be getting a **middleware** function to add your own protected routes and check whether the user is logged in and valid, ensuring only authenticated users can access that.
+- User Management: Easily manage user's details through our API.
+- Salable & Easy-to-Use: Authocate is built on top of **Express** and **Mongoose**, making it simple to integrate into your existing Express applications.
+-   **Still not convinced?** 😐 This package contains the necessary endpoints for authentication. You can add as many protected endpoints as needed for your app by using our authorization middleware.
 
-## Setup Instructions 
+Feel free to explore the power of this npm package and create secure and robust authentication for your web applications. If you have any questions or need assistance, don't hesitate to reach out. Happy coding! 🚀
+## Setup Instructions
 
  - Required packages to be installed alongside `authocate-serve`
 	 - Express.js
 	 - Mongoose (currently only MongoDB supported)
 	 - dotenv
 ### Follow these steps to get started -
-1. Setup express and create an app instance -
+
+1. Just do `npm i authocate-server` to get the package.
+
+2. Setup express and create an app instance -
  
 ```js
 const  express  =  require('express') 
 const  app  =  express()`
 ```
 
-2. Setup dotenv and write your JWT secret key in the env file as shown below -
+3. Setup dotenv and write your JWT secret key in the env file as shown below -
 ```js
 const  dotenv  =  require('dotenv')
 dotenv.config()
 ```
-in the env file : **JWT_SECRET_KEY  =  'yourlittlesecret'**
-3. Add `app.use(express.json())` middleware to handle json data.
+	in the env file : JWT_SECRET_KEY  =  'yourbiggestsecret'
 
-4. Define a connectDB function which will connect to DB using mongoose and <u>save the connection instance in a variable</u>. Later, we will need this variable to talk to our MongoDB database.
-5. Install the **authocate-server** package using `npm i authocate-server` and require it.
-6. Create an instance of `authocate-server` and pass the following parameter in specified order to function.
+4. Add `app.use(express.json())` middleware to handle json data.
+
+5. Install the **authocate-server** package using `npm i authocate-server` and require it by creating an instance of it which will be an object. You can destructure authocate function from it.
+6.  Connect to mongodb using mongoose.
+	Pass the following parameter in specified order to authocate function.
 	1. `app` (express instance)
 	2. `mongoose connection object`
 	3. `JWT SECRET KEY`
-
-	To further simplify step 6 
-	- create a connectDB.js file
-	- inside that define an async function which connects to MongoDB server and return connection object. 
-	- Now export the function and import it in index.js. 
-	- After this you can use .then() to invoke the authocate-server instance.
+   For this you can use promise chaining.
 
 >*Still having confusions??* :no_mouth::no_mouth: 
-
->*It's okay darling, I got you covered just use following code*  :smile:
-
+>*It's okay darling, I got you covered just use following code snippet*  :smile:
 >*and don't forget to star my github repo and follow me on github* :smirk:
 
-### connectDB.js
+### 
 ```js
+const {authocate, authorize} = require('authocate-server')
 const mongoose = require('mongoose')
-
-const connectDB = async () => {
-  try {
-    const conn = await mongoose.connect(process.env.MONGO_URI, {
+try {
+  mongoose
+    .connect(process.env.MONGO_URI, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
     })
-
-    console.log(`MongoDB connected: ${conn.connection.host}`)
-
-    return conn
-  } catch (error) {
-    console.error(`Error: ${error.message}`)
-    process.exit(1)
-  }
+    .then((conn) => {
+      console.log(`MongoDB connected: ${conn.connection.host}`)
+      authocate(app, conn, process.env.JWT_SECRET_KEY)
+    })
+    .catch((error) => {
+      console.error(`Error: ${error.message}`)
+      process.exit(1)
+    })
+} catch (error) {
+  console.error(`Error: ${error.message}`)
+  process.exit(1)
 }
-module.exports = connectDB
-
 ```
+## Usage
 
-### index.js
+You can use the built-in API endpoints for user authentication and management. These endpoints are:
+
+-   **`POST /api/auth/login`**: Authenticate a user and obtain an access token.
+-   **`GET /api/auth/login`**: Get details of the logged-in user.
+-   **`POST /api/auth/signup`**: Register a new user.
+-   **`PATCH /api/auth/update`**: Update the logged-in user's details.
+-   **`GET /api/user/:id`**: Get a user's details by their ID.
+
+You can add your own protected endpoints by using `authorise` middleware which takes in a JWT token as its argument. Below code snippet will explain the usage clearly
+
 ```js
-const express = require('express')
-const app = express()
-const dotenv = require('dotenv')
-dotenv.config()
-const connectDB = require('./db.js')
-const PORT = 5000
-app.listen(PORT, () => {
-  console.log(`SERVER is running on PORT ${PORT}`)
-})
+const { authorize } =  require('authocate-server')
 
-app.use(express.json())
-const authocate = require('authocate')
-connectDB().then((conn) => authocate(app, conn, process.env.JWT_SECRET_KEY))
+app.get('/authaccessonly', authorize(process.env.JWT_SECRET_KEY), (req, res) =>
+res.json({ message: 'The person is authorised' })
+)
+// Here we are going through "authorise" middleware to first check about user authorisation and then proceed to endpoint logic.
 ```
 
 ## API DOCUMENTATION
@@ -192,7 +195,7 @@ connectDB().then((conn) => authocate(app, conn, process.env.JWT_SECRET_KEY))
 ### 4. Update User
 
 - ENDPOINT : `/api/auth/update`
-- Method: *`PATCH`**
+- Method: **`PATCH`**
 - Description: Endpoint to update logged in user.
 - **Request Body**:
   ```json
@@ -231,7 +234,7 @@ connectDB().then((conn) => authocate(app, conn, process.env.JWT_SECRET_KEY))
 	    "_id": "64c3ebc4ed78a34e74c153fe",
 	    "username": "newuser",
 	    "email": "heyo@gmail.com",
-	    "profilePic": "https://www.nicepng.com/png/detail/933-9332131_profile-picture-default-png.png",
+	    "profilePic": "https://www.nicepng.com/png/detail/933-933...",
 	    "createdAt": "2023-07-28T16:24:36.749Z",
 	    "updatedAt": "2023-07-30T20:13:15.816Z",
 	    "__v": 0
@@ -239,4 +242,26 @@ connectDB().then((conn) => authocate(app, conn, process.env.JWT_SECRET_KEY))
 	  ```
 
 
+## Future Development
 
+
+This is just a start for a very robust and secure authentication system, and I will be constantly improving the package. Some ideas to implement in the future include:
+
+1.  **Custom User Schema**: Allow users to define and use their own custom user schema, providing more flexibility and customization options for different applications.
+    
+2.  **Forget Password Option**: Implement a "Forget Password" feature that allows users to reset their passwords through a secure process, such as email verification or security questions.
+    
+3.  **Client-Side User Authentication**: Create a separate npm package specifically designed for client-side user authentication management. This package will seamlessly connect with the authocate-server package, making the overall user authentication experience smooth and hassle-free for developers.
+    
+4.  **Token Expiration and Refresh**: Implement token expiration and refresh mechanisms to enhance security and prevent unauthorized access. Also usage of http-only cookie will be implemented to prevent alien js code to interact with the authentication system
+
+5. **Rate Limiting and IP Blocking**: Add rate-limiting and IP blocking functionalities to protect against brute-force attacks and potential security threats.
+
+## Contribute
+
+When it comes to managing a Open Source project I'm just a beginner and learning, If anyone want to raise a PR or want to have a chat with me regarding the project and contributions, please connect with me.
+
+Email ID:  siddharthsaurav15@gmail.com
+Linkedin : https://www.linkedin.com/in/siddharth-saurav/
+
+Cheers :v::v:
