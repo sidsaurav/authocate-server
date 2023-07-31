@@ -1,11 +1,11 @@
-
-
 # authocate-server
-Email ID:  siddharthsaurav15@gmail.com
-Linkedin : https://www.linkedin.com/in/siddharth-saurav/
+
+For any query and discussion please connect with me
+- [![Gmail](https://img.icons8.com/fluency/15/null/gmail.png) siddharthsaurav15@gmail.com](mailto::siddharthsaurav15@gmail.com)
+- [![Linkedin](https://i.stack.imgur.com/gVE0j.png) linkedin.com/in/siddharth-saurav/](https://www.linkedin.com/in/siddharth-saurav/)
 
 ## Introduction
-**authocate-server is a powerful Node.js middleware that simplifies authentication and user management for your Express applications. You can add authentication to your web app using **just one line of code**. 
+**authocate-server** is a powerful Node.js middleware that simplifies authentication and user management for your Express applications. You can add authentication to your web app using **just one line of code**. 
 With authocate-server, you can create custom secure endpoints with ease and focus on building the core features of your application.
 
 ## Table of Contents
