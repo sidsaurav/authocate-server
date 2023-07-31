@@ -1,6 +1,6 @@
 const authRouter = require('./authRouter.js')
 const generateModel = require('./userSchema.js')
-
+const authorize = require('./authorize.js')
 const initApp = (app, conn, JWT_SECRET_KEY) => {
   console.log('Initializing authentication...')
 
