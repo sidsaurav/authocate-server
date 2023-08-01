@@ -58,7 +58,12 @@ dotenv.config()
 4. Add `app.use(express.json())` middleware to handle json data.
 
 5. Install the **authocate-server** package using `npm i authocate-server` and require it by creating an instance of it which will be an object. You can destructure authocate function from it.
-6.  Connect to mongodb using mongoose.
+
+```js
+const {authocate} = require('authocate-server')
+```
+
+6.  Connect to MongoDB using mongoose.
 	Pass the following parameter in specified order to authocate function.
 	1. `app` (express instance)
 	2. `mongoose connection object`
