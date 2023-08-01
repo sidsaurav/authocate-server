@@ -107,7 +107,7 @@ const updateUser = async (req, res) => {
   foundUser = await req.User.findOne({ username: loggedInUser })
   foundUser.password = undefined
   return res.status(200).json({
-    ...foundUser,
+    ...foundUser._doc,
     message: 'User updated successfully!',
   })
 }
