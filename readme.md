@@ -109,6 +109,8 @@ You can use the built-in API endpoints for user authentication and management. T
 
 You can add your own protected endpoints by using `authorise` middleware which takes in a JWT token as its argument. Below code snippet will explain the usage clearly
 
+Make sure to use application/json as content-type in the header of your request.
+
 ```js
 const { authorize } =  require('authocate-server')
 
@@ -152,7 +154,7 @@ res.json({ message: 'The person is authorised' })
 
 - ENDPOINT : `/api/auth/login`
 - Method: **`GET`**
-- Headers: Authorisation = Bearer Token
+- Headers {Authorisation : Bearer Token}
 - Description: Get details of logged in user.
  - Response Body:
 	```json
@@ -172,6 +174,8 @@ res.json({ message: 'The person is authorised' })
 - ENDPOINT : `/api/auth/signup`
 - Method: **`POST`**
 - Description: Endpoint to register a user.
+- Compulsory Fields : username, password, email
+- Optional Fields : profilePic
 - **Request Body**:
   ```json
   {
