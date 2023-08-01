@@ -136,7 +136,7 @@ res.json({ message: 'The person is authorised' })
   ```
  - **Response Body**:
 	```json
-	{
+	{    
 	    "_id": "64c3ebc4ed78a34e74c153fe",
 	    "username": "newuser",
 	    "email": "newuser@gmail.com",
@@ -144,7 +144,8 @@ res.json({ message: 'The person is authorised' })
 	    "createdAt": "2023-07-28T16:24:36.749Z",
 	    "updatedAt": "2023-07-28T16:24:36.749Z",
 	    "__v": 0,
-	    "token": "eyJhbGciOiJIUzI1NiIsInR5cC..."
+	    "token": "eyJhbGciOiJIUzI1NiIsInR5cC...",
+			"message": "Logged in successfully!"
 	}
 	 ```
 
@@ -156,7 +157,7 @@ res.json({ message: 'The person is authorised' })
 - Description: Get details of logged in user.
  - Response Body:
 	```json
-	{
+	{     
 	    "_id": "64c3ebc4ed78a34e74c153fe",
 	    "username": "newuser",
 	    "email": "newuser@gmail.com",
@@ -184,19 +185,17 @@ res.json({ message: 'The person is authorised' })
   ```
  - **Response Body**:
 	  ```json
-	  {
-	    "message": "User created",
-	    "user": {
-	        "username": "newuser",
-	        "email": "newuser@gmail.com",
-	        "profilePic": "https://www.nicepng.com/p...",
-	        "_id": "64c3ebc4ed78a34e74c153fe",
-	        "createdAt": "2023-07-28T16:24:36.749Z",
-	        "updatedAt": "2023-07-28T16:24:36.749Z",
-	        "__v": 0,
-	        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6Ikp..."
-	    }
-	}
+	  {   
+        "username": "newuser",
+        "email": "newuser@gmail.com",
+        "profilePic": "https://www.nicepng.com/p...",
+        "_id": "64c3ebc4ed78a34e74c153fe",
+        "createdAt": "2023-07-28T16:24:36.749Z",
+        "updatedAt": "2023-07-28T16:24:36.749Z",
+        "__v": 0,
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6Ikp...",
+        "message": "User created",
+    }
 	  ```
 	  
 ### 4. Update User
@@ -214,17 +213,15 @@ res.json({ message: 'The person is authorised' })
  - **Response Body**:
 	  ```json
 	  {
-	    "message": "User updated successfully!",
-	    "updatedUser": {
-	        "_id": "64c3ebc4ed78a34e74c153fe",
-	        "username": "newuser",
-	        "email": "heyo@gmail.com",
-	        "profilePic": "https://www.nicepng.com/png/detail/93...",
-	        "createdAt": "2023-07-28T16:24:36.749Z",
-	        "updatedAt": "2023-07-30T20:13:15.816Z",
-	        "__v": 0
-	    }
-	}
+				"_id": "64c3ebc4ed78a34e74c153fe",
+				"username": "newuser",
+				"email": "heyo@gmail.com",
+				"profilePic": "https://www.nicepng.com/png/detail/93...",
+				"createdAt": "2023-07-28T16:24:36.749Z",
+				"updatedAt": "2023-07-30T20:13:15.816Z",
+				"__v": 0,
+				"message": "User updated successfully!"
+	  }
 	  ```
 
 
