@@ -135,7 +135,6 @@ res.json({ message: 'The person is authorised' })
   }
   ```
  - **Response Body**:
-	 
 	```json
 	{
 	    "_id": "64c3ebc4ed78a34e74c153fe",
@@ -148,7 +147,6 @@ res.json({ message: 'The person is authorised' })
 	    "token": "eyJhbGciOiJIUzI1NiIsInR5cC..."
 	}
 	 ```
-
 
 ### 2. Get Logged in User
 
