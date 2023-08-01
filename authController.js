@@ -28,7 +28,9 @@ const loginUser = (JWT_SECRET_KEY) => async (req, res) => {
     })
     foundUser.password = undefined
     foundUser.token = token
-    return res.status(200).json({ ...foundUser._doc, token })
+    return res
+      .status(200)
+      .json({ ...foundUser._doc, token, message: 'Logged in successfully!' })
   } catch (err) {
     return res.status(500).json({ message: err.message })
   }
@@ -77,9 +79,11 @@ const signupUser = (JWT_SECRET_KEY) => async (req, res) => {
         expiresIn: '1d',
       })
       createdUser.password = undefined
-      return res
-        .status(201)
-        .json({ message: 'User created', user: { ...createdUser._doc, token } })
+      return res.status(201).json({
+        ...createdUser._doc,
+        token,
+        message: 'User created successfully!',
+      })
     }
   } catch (err) {
     return res.status(401).json({ message: err.message })
@@ -103,8 +107,8 @@ const updateUser = async (req, res) => {
   foundUser = await req.User.findOne({ username: loggedInUser })
   foundUser.password = undefined
   return res.status(200).json({
+    ...foundUser,
     message: 'User updated successfully!',
-    updatedUser: foundUser,
   })
 }
 
