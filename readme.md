@@ -213,14 +213,14 @@ res.json({ message: 'The person is authorised' })
  - **Response Body**:
 	  ```json
 	  {
-				"_id": "64c3ebc4ed78a34e74c153fe",
-				"username": "newuser",
-				"email": "heyo@gmail.com",
-				"profilePic": "https://www.nicepng.com/png/detail/93...",
-				"createdAt": "2023-07-28T16:24:36.749Z",
-				"updatedAt": "2023-07-30T20:13:15.816Z",
-				"__v": 0,
-				"message": "User updated successfully!"
+		"_id": "64c3ebc4ed78a34e74c153fe",
+		"username": "newuser",
+		"email": "heyo@gmail.com",
+		"profilePic": "https://www.nicepng.com/png/detail/93...",
+		"createdAt": "2023-07-28T16:24:36.749Z",
+		"updatedAt": "2023-07-30T20:13:15.816Z",
+		"__v": 0,
+		"message": "User updated successfully!"
 	  }
 	  ```
 
