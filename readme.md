@@ -128,12 +128,12 @@ res.json({ message: 'The person is authorised' })
 - Method: **`POST`**
 - Description: Endpoint to authenticate a user and obtain an access token.
 - **Request Body**:
-  ```json
-  {
-    "username": "newuser",
-    "password": "123456"
-  }
-  ```
+	```json
+	{
+		"username": "newuser",
+		"password": "123456"
+	}
+	```
  - **Response Body**:
 	```json
 	{    
@@ -176,13 +176,13 @@ res.json({ message: 'The person is authorised' })
 - Compulsory Fields : username, password, email
 - Optional Fields : profilePic
 - **Request Body**:
-  ```json
-  {
-    "username": "newuser",
-    "password": "123456",
-    "email":"newuser@gmail.com"
-  }
-  ```
+	```json
+	{
+		"username": "newuser",
+		"password": "123456",
+		"email":"newuser@gmail.com"
+	}
+	```
  - **Response Body**:
 	```json
 	{   
@@ -204,12 +204,12 @@ res.json({ message: 'The person is authorised' })
 - Method: **`PATCH`**
 - Description: Endpoint to update logged in user.
 - **Request Body**:
-  ```json
-  {
-    "username": "user123",
-    "password": "secretpassword"
-  }
-  ```
+	```json
+	{
+		"username": "user123",
+		"password": "secretpassword"
+	}
+	```
  - **Response Body**:
 	```json
 	{
