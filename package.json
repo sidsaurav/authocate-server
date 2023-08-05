@@ -1,6 +1,6 @@
 {
   "name": "authocate-server",
-  "version": "1.5.9",
+  "version": "1.5.10",
   "description": "npm package to handle authentication logic",
   "main": "index.js",
   "scripts": {
