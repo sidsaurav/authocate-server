@@ -91,23 +91,37 @@ const signupUser = (JWT_SECRET_KEY) => async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
+  try {
     const loggedInUserID = req.userData._id
-    console.log(req.body, req.userData)
-  let foundUser = await req.User.findById(loggedInUserID)
-  if (!foundUser) {
-    return res.status(404).json({
-      error:
-        'API error, this should not happen. Please contact the owner to get it resolved',
-    })
-  }
-  const updatedUser = await req.User.updateOne({ $set: { ...req.body } })
 
-  foundUser = await req.User.findById(loggedInUserID)
-  foundUser.password = undefined
-  return res.status(200).json({
-    ...foundUser._doc,
-    message: 'User updated successfully!',
-  })
+    let foundUser = await req.User.findById(loggedInUserID)
+
+    if (!foundUser) {
+      return res.status(404).json({
+        error: 'User not found. Please contact the owner to get it resolved',
+      })
+    }
+
+    if (req.body.hasOwnProperty('password')) {
+      const hash = await bcrypt.hash(req.body.password, 10)
+      req.body.password = hash
+    }
+
+    const updatedUser = await req.User.updateOne(
+      { _id: loggedInUserID },
+      { $set: { ...req.body } }
+    )
+    console.log(updatedUser)
+    const newFoundUser = await req.User.findById(loggedInUserID)
+
+    newFoundUser.password = undefined
+    return res.status(200).json({
+      ...newFoundUser._doc,
+      message: 'User updated successfully!',
+    })
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
 }
 
 const logoutUser = async (req, res) => {
