@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const generateModel = (conn) => {
   const userSchema = new mongoose.Schema(
     {
-      username: {
+      email: {
         type: String,
         required: true,
         unique: true,
@@ -12,9 +12,9 @@ const generateModel = (conn) => {
         type: String,
         required: true,
       },
-      email: {
+      username: {
         type: String,
-        required: true,
+        unique: true,
       },
       profilePic: {
         type: String,

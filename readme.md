@@ -9,6 +9,7 @@ For any query and discussion please connect with me
 **authocate-server** is a powerful Node.js middleware that simplifies authentication and user management for your Express applications. You can add authentication to your web app using **just one line of code**. 
 With authocate-server, you can create custom secure endpoints with ease and focus on building the core features of your application.
 
+### Primary Credentials for login as of now are email and password which can be changed in future development.
 ## Table of Contents
 
 - [Features](#features)
@@ -272,3 +273,13 @@ Email ID:  siddharthsaurav15@gmail.com
 Linkedin : https://www.linkedin.com/in/siddharth-saurav/
 
 Cheers :v::v:
+
+
+FOR REFERENCE-----------------------------------------------------
+
+- Primary Credentials for login are email and password.
+- Uses JWT token based authentication. Token can be stored in frontend and attached to Authorisation HEADER.
+- Encrypt password in database using `bcrytjs`
+- Exposes authorise middleware to create sutom protected routes
+
+TODO: rate limit and ip block, validation, custom user schema, update documentation, how to create custom authoeised route

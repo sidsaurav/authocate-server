@@ -3,15 +3,15 @@ const jwt = require('jsonwebtoken')
 
 const loginUser = (JWT_SECRET_KEY) => async (req, res) => {
   try {
-    const username = req.body.username
+    const email = req.body.email
     const password = req.body.password
 
-    if (!username || !password) {
+    if (!email || !password) {
       return res
         .status(400)
-        .json({ error: 'Please provide username and password' })
+        .json({ error: 'Please provide email and password' })
     }
-    const foundUser = await req.User.findOne({ username })
+    const foundUser = await req.User.findOne({ email })
 
     if (!foundUser) {
       return res.status(401).json({ error: 'Invalid credentials' })
@@ -39,7 +39,7 @@ const loginUser = (JWT_SECRET_KEY) => async (req, res) => {
 const getLoggedInUser = async (req, res) => {
   try {
     const loggedInUser = await req.User.findOne({
-      username: req.userData.username,
+      email: req.userData.email,
     })
     loggedInUser.password = undefined
 
@@ -51,36 +51,27 @@ const getLoggedInUser = async (req, res) => {
 
 const signupUser = (JWT_SECRET_KEY) => async (req, res) => {
   try {
-    const username = req.body.username
-    const password = req.body.password
     const email = req.body.email
-
-    if (!username || !password) {
-      return res.status(400).send('Please provide username and password')
+    const password = req.body.password
+    if (!email || !password) {
+      return res.status(400).send('Please provide email and password')
     }
 
-    const foundUser = await req.User.findOne({ username })
+    const foundUser = await req.User.findOne({ email })
     if (foundUser) {
       return res.status(401).json({ error: 'User already exists' })
-    }
-    if (email) {
-      const foundEmail = await req.User.findOne({ email })
-      if (foundEmail) {
-        return res.status(401).json({ error: 'Email already in use' })
-      }
     }
 
     const hash = await bcrypt.hash(password, 10)
     req.body.password = hash
     const createdUser = await req.User.create(req.body)
-
     if (createdUser) {
-      const token = jwt.sign({ username }, JWT_SECRET_KEY, {
+      createdUser.password = undefined
+      const token = jwt.sign({ ...createdUser }, JWT_SECRET_KEY, {
         expiresIn: '1d',
       })
-      createdUser.password = undefined
       return res.status(201).json({
-        ...createdUser._doc,
+        ...createdUser,
         token,
         message: 'User created successfully!',
       })
