@@ -46,7 +46,7 @@ Feel free to explore the power of this npm package and create secure and robust 
  
 ```js
 const  express  =  require('express') 
-const  app  =  express()`
+const  app  =  express()
 ```
 
 3. Setup dotenv and write your JWT secret key in the env file as shown below -
@@ -54,7 +54,9 @@ const  app  =  express()`
 const  dotenv  =  require('dotenv')
 dotenv.config()
 ```
-	in the env file : JWT_SECRET_KEY  =  'yourbiggestsecret'
+	in the env file write the following-
+    - WT_SECRET_KEY  =  'yourbiggestsecret'
+    - MONGO_URI = 'yourmongouri'
 
 4. Add `app.use(express.json())` middleware to handle json data.
 
