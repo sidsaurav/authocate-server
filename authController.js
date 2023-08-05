@@ -61,9 +61,6 @@ const signupUser = (JWT_SECRET_KEY) => async (req, res) => {
     if (foundUser) {
       return res.status(401).json({ error: 'User already exists' })
     }
-
-    const hash = await bcrypt.hash(password, 10)
-    req.body.password = hash
     const createdUser = await req.User.create(req.body)
     if (createdUser) {
       createdUser.password = undefined

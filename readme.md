@@ -265,6 +265,8 @@ This is just a start for a very robust and secure authentication system, and I w
 
 5. **Rate Limiting and IP Blocking**: Add rate-limiting and IP blocking functionalities to protect against brute-force attacks and potential security threats.
 
+6. **Block Temp Email**: Add functionality to block temporary email addresses to prevent spamming and fake accounts.
+
 ## Contribute
 
 When it comes to managing a Open Source project I'm just a beginner and learning, If anyone want to raise a PR or want to have a chat with me regarding the project and contributions, please connect with me.
@@ -282,4 +284,4 @@ FOR REFERENCE-----------------------------------------------------
 - Encrypt password in database using `bcrytjs`
 - Exposes authorise middleware to create sutom protected routes
 
-TODO: rate limit and ip block, validation, custom user schema, update documentation, how to create custom authoeised route
+TODO: rate limit and ip block, validation, custom user schema, update documentation, how to create custom authorised route
