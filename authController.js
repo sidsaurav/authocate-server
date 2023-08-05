@@ -91,20 +91,17 @@ const signupUser = (JWT_SECRET_KEY) => async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
-  const loggedInUser = req.userData.username
-  let foundUser = await req.User.findOne({ username: loggedInUser })
+  const loggedInUserID = req.userData._id
+  let foundUser = await req.User.findOne({ _id: loggedInUserID })
   if (!foundUser) {
     return res.status(404).json({
       error:
         'API error, this should not happen. Please contact the owner to get it resolved',
     })
   }
-  const updatedUser = await req.User.updateOne(
-    { username: loggedInUser },
-    { $set: { ...req.body } }
-  )
+  const updatedUser = await req.User.updateOne({ $set: { ...req.body } })
 
-  foundUser = await req.User.findOne({ username: loggedInUser })
+  foundUser = await req.User.findOne({ _id: loggedInUserID })
   foundUser.password = undefined
   return res.status(200).json({
     ...foundUser._doc,
