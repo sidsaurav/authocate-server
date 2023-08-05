@@ -20,6 +20,8 @@
   "homepage": "https://github.com/sidsaurav/authocate-server",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "jsonwebtoken": "^9.0.1"
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.1",
+    "mongoose": "^7.4.2"
   }
 }

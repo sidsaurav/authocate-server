@@ -10,7 +10,7 @@ const authorize = (JWT_SECRET_KEY) => (req, res, next) => {
     }
     const token = req.headers.authorization.split(' ')[1]
     const decodedToken = jwt.verify(token, JWT_SECRET_KEY)
-    req.userData = { username: decodedToken.username }
+    req.userData = {...decodedToken}
     next()
   } catch (err) {
     return res.status(403).json({ message: err.message })

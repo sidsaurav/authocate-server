@@ -11,7 +11,7 @@ const loginUser = (JWT_SECRET_KEY) => async (req, res) => {
         .status(400)
         .json({ error: 'Please provide username and password' })
     }
-    const foundUser = await req.User.findOne({ username: username })
+    const foundUser = await req.User.findOne({ username })
 
     if (!foundUser) {
       return res.status(401).json({ error: 'Invalid credentials' })
@@ -23,10 +23,10 @@ const loginUser = (JWT_SECRET_KEY) => async (req, res) => {
       return res.status(401).json({ error: 'Invalid credentials' })
     }
 
-    const token = jwt.sign({ username: foundUser.username }, JWT_SECRET_KEY, {
+    foundUser.password = undefined
+    const token = jwt.sign({ ...foundUser._doc }, JWT_SECRET_KEY, {
       expiresIn: '1d',
     })
-    foundUser.password = undefined
     foundUser.token = token
     return res
       .status(200)
@@ -91,8 +91,9 @@ const signupUser = (JWT_SECRET_KEY) => async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
-  const loggedInUserID = req.userData._id
-  let foundUser = await req.User.findOne({ _id: loggedInUserID })
+    const loggedInUserID = req.userData._id
+    console.log(req.body, req.userData)
+  let foundUser = await req.User.findById(loggedInUserID)
   if (!foundUser) {
     return res.status(404).json({
       error:
@@ -101,7 +102,7 @@ const updateUser = async (req, res) => {
   }
   const updatedUser = await req.User.updateOne({ $set: { ...req.body } })
 
-  foundUser = await req.User.findOne({ _id: loggedInUserID })
+  foundUser = await req.User.findById(loggedInUserID)
   foundUser.password = undefined
   return res.status(200).json({
     ...foundUser._doc,
