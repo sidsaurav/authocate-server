@@ -1,4 +1,5 @@
 # authocate-server
+# THIS PROJECT IS STILL IN ALPHA PHASE and NOT READY FOR STABLE USAGE
 
 For any query and discussion please connect with me
 - [![Gmail](https://img.icons8.com/fluency/15/null/gmail.png) siddharthsaurav15@gmail.com](mailto::siddharthsaurav15@gmail.com)
