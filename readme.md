@@ -55,7 +55,7 @@ const  dotenv  =  require('dotenv')
 dotenv.config()
 ```
 	in the env file write the following-
-    - WT_SECRET_KEY  =  'yourbiggestsecret'
+    - JWT_SECRET_KEY  =  'yourbiggestsecret'
     - MONGO_URI = 'yourmongouri'
 
 4. Add `app.use(express.json())` middleware to handle json data.
