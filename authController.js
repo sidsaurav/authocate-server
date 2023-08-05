@@ -9,18 +9,18 @@ const loginUser = (JWT_SECRET_KEY) => async (req, res) => {
     if (!username || !password) {
       return res
         .status(400)
-        .json({ message: 'Please provide username and password' })
+        .json({ error: 'Please provide username and password' })
     }
     const foundUser = await req.User.findOne({ username: username })
 
     if (!foundUser) {
-      return res.status(401).json({ message: 'Invalid credentials' })
+      return res.status(401).json({ error: 'Invalid credentials' })
     }
 
     const isMatch = await bcrypt.compare(password, foundUser.password)
 
     if (!isMatch) {
-      return res.status(401).json({ message: 'Invalid credentials' })
+      return res.status(401).json({ error: 'Invalid credentials' })
     }
 
     const token = jwt.sign({ username: foundUser.username }, JWT_SECRET_KEY, {
@@ -32,7 +32,7 @@ const loginUser = (JWT_SECRET_KEY) => async (req, res) => {
       .status(200)
       .json({ ...foundUser._doc, token, message: 'Logged in successfully!' })
   } catch (err) {
-    return res.status(500).json({ message: err.message })
+    return res.status(500).json({ error: err.message })
   }
 }
 
@@ -45,7 +45,7 @@ const getLoggedInUser = async (req, res) => {
 
     return res.status(200).json(loggedInUser)
   } catch (err) {
-    return res.status(500).json({ message: err.message })
+    return res.status(500).json({ error: err.message })
   }
 }
 
@@ -61,12 +61,12 @@ const signupUser = (JWT_SECRET_KEY) => async (req, res) => {
 
     const foundUser = await req.User.findOne({ username })
     if (foundUser) {
-      return res.status(401).json({ message: 'User already exists' })
+      return res.status(401).json({ error: 'User already exists' })
     }
     if (email) {
       const foundEmail = await req.User.findOne({ email })
       if (foundEmail) {
-        return res.status(401).json({ message: 'Email already in use' })
+        return res.status(401).json({ error: 'Email already in use' })
       }
     }
 
@@ -86,7 +86,7 @@ const signupUser = (JWT_SECRET_KEY) => async (req, res) => {
       })
     }
   } catch (err) {
-    return res.status(401).json({ message: err.message })
+    return res.status(401).json({ error: err.message })
   }
 }
 
@@ -95,7 +95,7 @@ const updateUser = async (req, res) => {
   let foundUser = await req.User.findOne({ username: loggedInUser })
   if (!foundUser) {
     return res.status(404).json({
-      message:
+      error:
         'API error, this should not happen. Please contact the owner to get it resolved',
     })
   }
@@ -120,7 +120,7 @@ const getUserById = async (req, res) => {
   const ID = req.params.id
   const foundUser = await req.User.findById(ID)
   if (!foundUser) {
-    return res.status(404).json({ message: 'User not found' })
+    return res.status(404).json({ error: 'User not found' })
   }
   foundUser.password = undefined
   return res.status(200).json(foundUser)
