@@ -1,5 +1,6 @@
 const authRouter = require('./authRouter.js')
 const generateModel = require('./userSchema.js')
+const rateLimiter = require('./rateLimiter.js')
 const authorize = require('./authorize.js')
 const initApp = (app, conn, JWT_SECRET_KEY) => {
   const User = generateModel(conn)
@@ -11,6 +12,6 @@ const initApp = (app, conn, JWT_SECRET_KEY) => {
 
   app.use(authRouter(JWT_SECRET_KEY))
 
-  console.log('Initialized authentication...')
+  console.log('Initialized authentication')
 }
-module.exports = { authocate: initApp, authorize }
+module.exports = { authocate: initApp, authorize, rateLimiter }
