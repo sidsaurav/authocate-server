@@ -36,7 +36,7 @@ const generateModel = (conn) => {
       },
       username: {
         type: String,
-        unique: true,
+        default: 'User',
       },
       profilePic: {
         type: String,

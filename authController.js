@@ -63,12 +63,13 @@ const signupUser = (JWT_SECRET_KEY) => async (req, res) => {
     }
     const createdUser = await req.User.create(req.body)
     if (createdUser) {
+      console.log(createdUser)
       createdUser.password = undefined
       const token = jwt.sign({ ...createdUser }, JWT_SECRET_KEY, {
         expiresIn: '1d',
       })
       return res.status(201).json({
-        ...createdUser,
+        ...createdUser._doc,
         token,
         message: 'User created successfully!',
       })
