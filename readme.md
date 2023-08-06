@@ -15,6 +15,7 @@ With authocate-server, you can create custom secure endpoints with ease and focu
 - [Features](#features)
 - [Setup Instructions](#setup-instructions)
 - [Usage](#usage)
+- [Custom Protected Routes](#custom-protected-routes)
 - [API DOCUMENTATION](#api-documentation)
     - [1. Login User](#1-login-user)
     - [2. Get Logged in User](#2-get-logged-in-user)
@@ -111,6 +112,7 @@ You can use the built-in API endpoints for user authentication and management. T
 -   **`PATCH /api/auth/update`**: Update the logged-in user's details.
 -   **`GET /api/user/:id`**: Get a user's details by their ID.
 
+## Custom Protected Routes
 You can add your own protected endpoints by using `authorise` middleware which takes in a JWT token as its argument. Below code snippet will explain the usage clearly
 
 Make sure to use `application/json` as `content-type` in the header of your request.
