@@ -1,13 +1,14 @@
 # authocate-server
-# THIS PROJECT IS STILL IN ALPHA PHASE and NOT READY FOR STABLE USAGE
+# THIS PROJECT IS STILL IN DEV PHASE and THERE CAN BE FEW BUGS. PLEASE REPORT IF YOU FIND ANY.
+
 
 For any query and discussion please connect with me
 - [![Gmail](https://img.icons8.com/fluency/15/null/gmail.png) siddharthsaurav15@gmail.com](mailto::siddharthsaurav15@gmail.com)
 - [![Linkedin](https://i.stack.imgur.com/gVE0j.png) linkedin.com/in/siddharth-saurav/](https://www.linkedin.com/in/siddharth-saurav/)
+- [![Twitter](https://img.icons8.com/fluency/15/null/twitter.png) twitter.com/sidsauravdev](https://twitter.com/sidsauravdev)
 
 ## Introduction
-**authocate-server** is a powerful Node.js middleware that simplifies authentication and user management for your Express applications. You can add authentication to your web app using **just one line of code**. 
-With authocate-server, you can create custom secure endpoints with ease and focus on building the core features of your application.
+**authocate-server** is a powerful, yet very beginner friendly Node.js middleware that simplifies authentication and user management for your Express applications. You can add authentication to your web app using **just one line of code**.
 
 ### Primary Credentials for login as of now are email and password which can be changed in future development.
 ## Table of Contents
@@ -15,7 +16,9 @@ With authocate-server, you can create custom secure endpoints with ease and focu
 - [Features](#features)
 - [Setup Instructions](#setup-instructions)
 - [Usage](#usage)
+- [User Schema](#user-schema)
 - [Custom Protected Routes](#custom-protected-routes)
+- [Rate Limitting](#rate-limitting)
 - [API DOCUMENTATION](#api-documentation)
     - [1. Login User](#1-login-user)
     - [2. Get Logged in User](#2-get-logged-in-user)
@@ -28,9 +31,14 @@ With authocate-server, you can create custom secure endpoints with ease and focu
 ## Features
 - User Authentication: Effortlessly handle user registration and login with secure password hashing using **bcrypt** and **JWT**-based authentication.
 
-- Access Control: You will be getting a **middleware** function to add your own protected routes and check whether the user is logged in and valid, ensuring only authenticated users can access that.
+- Custom Protected Routes: You will be getting a **middleware** function to add your own protected routes and check whether the user is logged in and valid, ensuring only authenticated users can access that.
+
+- Rate Limiting: Protect your application from brute-force attacks and potential security threats by limiting the number of requests per IP address.
+
 - User Management: Easily manage user's details through our API.
+
 - Salable & Easy-to-Use: Authocate is built on top of **Express** and **Mongoose**, making it simple to integrate into your existing Express applications.
+
 -   **Still not convinced?** 😐 This package contains the necessary endpoints for authentication. You can add as many protected endpoints as needed for your app by using our authorization middleware.
 
 Feel free to explore the power of this npm package and create secure and robust authentication for your web applications. If you have any questions or need assistance, don't hesitate to reach out. Happy coding! 🚀
@@ -57,7 +65,7 @@ const  dotenv  =  require('dotenv')
 dotenv.config()
 ```
 	in the env file write the following-
-    - JWT_SECRET_KEY  =  'yourbiggestsecret'
+    - JWT_SECRET_KEY  =  'yourcollegecrush'
     - MONGO_URI = 'yourmongouri'
 
 4. Add `app.use(express.json())` middleware to handle json data.
@@ -81,7 +89,7 @@ const {authocate} = require('authocate-server')
 
 ### 
 ```js
-const {authocate, authorize} = require('authocate-server')
+const {authocate, authorize, rateLimitter} = require('authocate-server')
 const mongoose = require('mongoose')
 try {
   mongoose
@@ -112,6 +120,34 @@ You can use the built-in API endpoints for user authentication and management. T
 -   **`PATCH /api/auth/update`**: Update the logged-in user's details.
 -   **`GET /api/user/:id`**: Get a user's details by their ID.
 
+## User Schema
+
+As of now authocate-server uses a default user schema but the development is going on to make it more flexible and pass your own user schema. The default user schema is as follows -
+
+```js
+const userSchema  = new mongoose.Schema({
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        format: 'email',
+      },
+      password: {
+        type: String,
+        required: true,
+      }
+      username: {
+        type: String,
+        default: 'User',
+      },
+      profilePic: {
+        type: String,
+        default:
+          'https://www.nicepng.com/png/detail/933-9332131_profile-picture-default-png.png',
+      },
+})
+```
+
 ## Custom Protected Routes
 You can add your own protected endpoints by using `authorise` middleware which takes in a JWT token as its argument. Below code snippet will explain the usage clearly
 
@@ -125,6 +161,34 @@ res.json({ message: 'The person is authorised' })
 )
 // Here we are going through "authorise" middleware to first check about user authorisation and then proceed to endpoint logic.
 ```
+
+## Rate Limitting
+
+Rate limiting is a technique used to control the rate of requests sent to a server. It is used to prevent brute-force attacks and potential security threats.
+
+Authocate uses the `express-rate-limit` package to implement rate limiting. You can configure the rate limit by destructing `rateLimitter` function from `authocate-server` and passing the following parameters in order.
+
+- timeInMs: The time window in milliseconds for which requests are checked.
+- maxRequests: The maximum number of requests allowed in the time window.
+
+```js
+const { rateLimitter } = require('authocate-server')
+const limitter = rateLimitter(60 * 1000, 15) // 15 requests per minute
+app.get("/someendpoint", limitter, (req, res) => {
+    // your logic
+    res.json({message: "bye gn sd tc"})
+})
+
+```
+
+Response Body if rate limit is exceeded
+```json
+{    
+    "error": "Too many requests, please try again later."
+}
+```
+
+
 
 ## API DOCUMENTATION
 
@@ -153,7 +217,7 @@ res.json({ message: 'The person is authorised' })
 	    "token": "eyJhbGciOiJIUzI1NiIsInR5cC...",
 		"message": "Logged in successfully!"
 	}
-	 ```
+	```
 
 ### 2. Get Logged in User
 
@@ -265,7 +329,7 @@ This is just a start for a very robust and secure authentication system, and I w
     
 4.  **Token Expiration and Refresh**: Implement token expiration and refresh mechanisms to enhance security and prevent unauthorized access. Also usage of http-only cookie will be implemented to prevent alien js code to interact with the authentication system
 
-5. **Rate Limiting and IP Blocking**: Add rate-limiting and IP blocking functionalities to protect against brute-force attacks and potential security threats.
+5. **IP Blocking**: Add rate-limiting and IP blocking functionalities to protect against brute-force attacks and potential security threats.
 
 6. **Block Temp Email**: Add functionality to block temporary email addresses to prevent spamming and fake accounts.
 
@@ -275,15 +339,6 @@ When it comes to managing a Open Source project I'm just a beginner and learning
 
 Email ID:  siddharthsaurav15@gmail.com
 Linkedin : https://www.linkedin.com/in/siddharth-saurav/
+Twitter : https://twitter.com/sidsauravdev
 
-Cheers :v::v:
-
-
-FOR REFERENCE-----------------------------------------------------
-
-- Primary Credentials for login are email and password.
-- Uses JWT token based authentication. Token can be stored in frontend and attached to Authorisation HEADER.
-- Encrypt password in database using `bcrytjs`
-- Exposes authorise middleware to create sutom protected routes
-
-TODO: rate limit and ip block, validation, custom user schema, update documentation, how to create custom authorised route
+Cheers! :v::v:
