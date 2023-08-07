@@ -89,7 +89,7 @@ const {authocate} = require('authocate-server')
 
 ### 
 ```js
-const {authocate, authorize, rateLimitter} = require('authocate-server')
+const {authocate, authorize, rateLimiter} = require('authocate-server')
 const mongoose = require('mongoose')
 try {
   mongoose
@@ -166,15 +166,15 @@ res.json({ message: 'The person is authorised' })
 
 Rate limiting is a technique used to control the rate of requests sent to a server. It is used to prevent brute-force attacks and potential security threats.
 
-Authocate uses the `express-rate-limit` package to implement rate limiting. You can configure the rate limit by destructing `rateLimitter` function from `authocate-server` and passing the following parameters in order.
+Authocate uses the `express-rate-limit` package to implement rate limiting. You can configure the rate limit by destructing `rateLimiter` function from `authocate-server` and passing the following parameters in order.
 
 - timeInMs: The time window in milliseconds for which requests are checked.
 - maxRequests: The maximum number of requests allowed in the time window.
 
 ```js
-const { rateLimitter } = require('authocate-server')
-const limitter = rateLimitter(60 * 1000, 15) // 15 requests per minute
-app.get("/someendpoint", limitter, (req, res) => {
+const { rateLimiter } = require('authocate-server')
+const limiter = rateLimiter(60 * 1000, 15) // 15 requests per minute
+app.get("/someendpoint", limiter, (req, res) => {
     // your logic
     res.json({message: "bye gn sd tc"})
 })
