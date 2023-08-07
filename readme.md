@@ -135,7 +135,8 @@ const userSchema  = new mongoose.Schema({
       password: {
         type: String,
         required: true,
-      }
+	validate: {...}
+      },
       username: {
         type: String,
         default: 'User',
@@ -215,7 +216,7 @@ Response Body if rate limit is exceeded
 	    "updatedAt": "2023-07-28T16:24:36.749Z",
 	    "__v": 0,
 	    "token": "eyJhbGciOiJIUzI1NiIsInR5cC...",
-		"message": "Logged in successfully!"
+ 	    "message": "Logged in successfully!"
 	}
 	```
 
@@ -338,7 +339,9 @@ This is just a start for a very robust and secure authentication system, and I w
 When it comes to managing a Open Source project I'm just a beginner and learning, If anyone want to raise a PR or want to have a chat with me regarding the project and contributions, please connect with me.
 
 Email ID:  siddharthsaurav15@gmail.com
+
 Linkedin : https://www.linkedin.com/in/siddharth-saurav/
+
 Twitter : https://twitter.com/sidsauravdev
 
 Cheers! :v::v:
