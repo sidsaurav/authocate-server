@@ -9,6 +9,11 @@ const initApp = (app, conn, JWT_SECRET_KEY, optionalObj) => {
 
   let User = undefined
   if (optionalObj && optionalObj.hasOwnProperty('userSchema')) {
+    const isValid = schemaValidator(optionalObj.userSchema)
+    if (!isValid) {
+      throw new Error('Invalid user schema')
+      return
+    }
     User = generateModel(conn, optionalObj.userSchema)
   } else {
     User = generateModel(conn, defaultUserSchema)
