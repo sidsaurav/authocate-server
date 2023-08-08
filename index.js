@@ -1,9 +1,18 @@
 const authRouter = require('./authRouter.js')
-const generateModel = require('./userSchema.js')
-const rateLimiter = require('./rateLimiter.js')
+const generateModel = require('./utils/userModel.js')
+const rateLimiter = require('./utils/rateLimiter.js')
 const authorize = require('./authorize.js')
-const initApp = (app, conn, JWT_SECRET_KEY) => {
-  const User = generateModel(conn)
+const defaultUserSchema = require('./utils/defaultUserSchema.js')
+const schemaValidator = require('./utils/customSchemaValidator.js')
+const initApp = (app, conn, JWT_SECRET_KEY, optionalObj) => {
+  //   console.log('optional', optionalObj)
+
+  let User = undefined
+  if (optionalObj && optionalObj.hasOwnProperty('userSchema')) {
+    User = generateModel(conn, optionalObj.userSchema)
+  } else {
+    User = generateModel(conn, defaultUserSchema)
+  }
 
   app.use((req, res, next) => {
     req.User = User

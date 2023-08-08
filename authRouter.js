@@ -8,7 +8,7 @@ const {
   updateUser,
 } = require('./authController.js')
 const authorize = require('./authorize.js')
-const rateLimiter = require('./rateLimiter.js')
+const rateLimiter = require('./utils/rateLimiter.js')
 const express = require('express')
 
 const authRouter = (JWT_SECRET_KEY) => {

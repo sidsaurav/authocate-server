@@ -63,7 +63,6 @@ const signupUser = (JWT_SECRET_KEY) => async (req, res) => {
     }
     const createdUser = await req.User.create(req.body)
     if (createdUser) {
-      console.log(createdUser)
       createdUser.password = undefined
       const token = jwt.sign({ ...createdUser }, JWT_SECRET_KEY, {
         expiresIn: '1d',
@@ -100,7 +99,6 @@ const updateUser = async (req, res) => {
       { _id: loggedInUserID },
       { $set: { ...req.body } }
     )
-    console.log(updatedUser)
     const newFoundUser = await req.User.findById(loggedInUserID)
 
     newFoundUser.password = undefined
