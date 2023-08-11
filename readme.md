@@ -1,5 +1,5 @@
 # authocate-server
-# THIS PROJECT IS STILL IN DEV PHASE and THERE CAN BE FEW BUGS. PLEASE REPORT IF YOU FIND ANY.
+### THIS PROJECT IS STILL IN DEV PHASE and THERE CAN BE FEW BUGS. PLEASE REPORT IF YOU FIND ANY.
 
 
 For any query and discussion please connect with me
@@ -46,7 +46,7 @@ For any query and discussion please connect with me
 Feel free to explore the power of this npm package and create secure and robust authentication for your web applications. If you have any questions or need assistance, don't hesitate to reach out. Happy coding! 🚀
 ## Setup Instructions
 
- - Required packages to be installed alongside `authocate-serve`
+ - Required packages to be installed alongside `authocate-server`
 	 - Express.js
 	 - Mongoose (currently only MongoDB supported)
 	 - dotenv
