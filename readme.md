@@ -16,7 +16,7 @@ For any query and discussion please connect with me
 - [Features](#features)
 - [Setup Instructions](#setup-instructions)
 - [Usage](#usage)
-- [User Schema](#user-schema)
+- [Custom and Default User Schema](#user-schema)
 - [Custom Protected Routes](#custom-protected-routes)
 - [Rate Limitting](#rate-limitting)
 - [API DOCUMENTATION](#api-documentation)
@@ -122,9 +122,62 @@ You can use the built-in API endpoints for user authentication and management. T
 
 ## User Schema
 
-As of now authocate-server uses a default user schema but the development is going on to make it more flexible and pass your own user schema. The default user schema is as follows -
+You can use our default user schema or create your own. 
+
+### Using Custom User Schema
+
+You can pass your own user schema in fourth parameter of authocate function which is an custom object. The key should be `userSchema` and value should be your custom user schema.
+
+**Usage**
 
 ```js
+authocate(app, conn, process.env.JWT_SECRET_KEY, { userSchema: customUserSchema})
+```
+**Points to remember while create a custom user schema**
+
+- The userSchema must have `email` and `password` fields.
+- The email field must have `required` as `true`.
+- The email field must have `unique` as `true`.
+- The password field must have `required` as `true`.
+- The email and password fields must have `type` as `String`.
+- You should add proper validation to the email and password fields.
+
+A sample custom user schema
+
+```js
+// sample custom user schema
+const userSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true,
+    lowercase: true,
+    match: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: 8,
+    maxlength: 64,
+  },
+  phoneNumber: {
+    type: String,
+    required: true,
+    match: /^\+[0-9]{1,3}-[0-9]{6,14}$/,
+  },
+})
+
+```
+### Using Default User Schema
+
+You can skip using custom userSchema in the fourth parameter if you want to use the default user schema.
+
+ The default user schema is as follows:
+
+```js
+// default user schema
+
 const userSchema  = new mongoose.Schema({
     email: {
         type: String,
@@ -135,7 +188,7 @@ const userSchema  = new mongoose.Schema({
       password: {
         type: String,
         required: true,
-	validate: {...}
+	    validate: {...}
       },
       username: {
         type: String,
@@ -148,6 +201,8 @@ const userSchema  = new mongoose.Schema({
       },
 })
 ```
+
+
 
 ## Custom Protected Routes
 You can add your own protected endpoints by using `authorise` middleware which takes in a JWT token as its argument. Below code snippet will explain the usage clearly
@@ -216,7 +271,7 @@ Response Body if rate limit is exceeded
 	    "updatedAt": "2023-07-28T16:24:36.749Z",
 	    "__v": 0,
 	    "token": "eyJhbGciOiJIUzI1NiIsInR5cC...",
- 	    "message": "Logged in successfully!"
+ 	    "message": "Logged in successfully!",
 	}
 	```
 
