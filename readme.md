@@ -8,7 +8,7 @@ For any query and discussion please connect with me
 - [![Twitter](https://img.icons8.com/fluency/15/null/twitter.png) twitter.com/sidsauravdev](https://twitter.com/sidsauravdev)
 
 ## Introduction
-**authocate-server** is a powerful, yet very beginner friendly Node.js middleware that simplifies authentication and user management for your Express applications. You can add authentication to your web app using **just one line of code**.
+**authocate-server** is a powerful, yet very beginner friendly Node.js middleware that simplifies authentication and user management for your Express applications. It requires minimal setup and you can add authentication to your web app using **just one line of code**.
 
 ### Primary Credentials for login as of now are email and password which can be changed in future development.
 ## Table of Contents
@@ -32,6 +32,8 @@ For any query and discussion please connect with me
 - User Authentication: Effortlessly handle user registration and login with secure password hashing using **bcrypt** and **JWT**-based authentication.
 
 - Custom Protected Routes: You will be getting a **middleware** function to add your own protected routes and check whether the user is logged in and valid, ensuring only authenticated users can access that.
+
+- Custom User Schema: As one size can't fit all, one schema can't meet all requirement. Now you can create userSchema as per your own requirement and pass it as an argument, or use our default user schema.
 
 - Rate Limiting: Protect your application from brute-force attacks and potential security threats by limiting the number of requests per IP address.
 
