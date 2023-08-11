@@ -13,7 +13,7 @@ const defaultUserSchema = new mongoose.Schema(
       required: true,
       minlength: [6, 'Password must be at least 6 characters'],
       maxlength: [32, 'Password must be at most 32 characters'],
-      required: true,
+
       validate: {
         validator: function (value) {
           const uppercaseRegex = /[A-Z]/
